@@ -23,12 +23,12 @@ def proof_of_work(last_proof):
     start = timer()
 
     print("Searching for next proof")
-    proof = random.randint(-sys.maxsize -1, sys.maxsize)
+    proof = 125645483
     #  TODO: Your code here
-    last_string = json.dumps(last_proof, sort_keys=True).encode()
+    last_string = f'{last_proof}'.encode()
     last_hash = hashlib.sha256(last_string).hexdigest()
     while valid_proof(last_hash, proof) is False:
-        proof += 1
+        proof += random.random()
     print("Proof found: " + str(proof) + " in " + str(timer() - start))
     return proof
 
