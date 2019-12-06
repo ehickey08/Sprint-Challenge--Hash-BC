@@ -29,9 +29,9 @@ def proof_of_work(last_proof):
     last_string = f'{last_proof}'.encode()
     last_hash = hashlib.sha256(last_string).hexdigest()
     while valid_proof(last_hash, proof) is False:
-        proof += random.getrandbits(256)
+        proof = random.getrandbits(256)
         count +=1
-        if count> 5000000:
+        if count> 3000000:
             return 'restart'
     #print("Proof found: " + str(proof) + ' ' + str(count) + " in " + str(
     # timer() - start))
