@@ -20,16 +20,21 @@ def proof_of_work(last_proof):
     - Use the same method to generate SHA-256 hashes as the examples in class
     """
 
-    start = timer()
+    #start = timer()
 
-    print("Searching for next proof")
-    proof = 125645483
+    #print("Searching for next proof")
+    proof = random.getrandbits(256)
+    count = 0
     #  TODO: Your code here
     last_string = f'{last_proof}'.encode()
     last_hash = hashlib.sha256(last_string).hexdigest()
     while valid_proof(last_hash, proof) is False:
-        proof += random.random()
-    print("Proof found: " + str(proof) + " in " + str(timer() - start))
+        proof += random.getrandbits(256)
+        count +=1
+        if count> 5000000:
+            return 'restart'
+    #print("Proof found: " + str(proof) + ' ' + str(count) + " in " + str(
+    # timer() - start))
     return proof
 
 
@@ -71,7 +76,8 @@ if __name__ == '__main__':
         r = requests.get(url=node + "/last_proof")
         data = r.json()
         new_proof = proof_of_work(data.get('proof'))
-
+        if new_proof == 'restart':
+            continue
         post_data = {"proof": new_proof,
                      "id": id}
 
