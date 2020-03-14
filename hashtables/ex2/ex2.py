@@ -23,4 +23,5 @@ def reconstruct_trip(tickets, length):
         source = route[i-1] if i>0 else 'NONE'
         route[i] = hash_table_retrieve(hashtable, source)
 
+    print(route)
     return route
